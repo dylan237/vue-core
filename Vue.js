@@ -1,8 +1,9 @@
 class Vue {
   constructor(options) {
-    const root = typeof options.el === 'string' ? document.querySelector(options.el) : options.el
-    if (root) {
-      this.$el = root
+    if (options.el) {
+      this.$el = typeof options.el === 'string' 
+        ? document.querySelector(options.el) 
+        : options.el
       this.$data = options.data
       this.$options = options
       // 數據劫持

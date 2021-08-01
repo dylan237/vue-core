@@ -1,8 +1,8 @@
 class Observer {
   constructor (data) {
-    this.observer(data)
+    this.observe(data)
   }
-  observer(data) {
+  observe(data) {
     if (data && typeof data === 'object') {
       Object.keys(data).forEach(key => {
         this.defineReactive(data, key, data[key])
@@ -10,7 +10,7 @@ class Observer {
     }
   }
   defineReactive(obj, key, value) {
-    this.observer(value) // 遞迴劫持值為物件的情況
+    this.observe(value) // 遞迴劫持值為物件的情況
 
     Object.defineProperty(obj, key, {
       configurable: false,
@@ -19,7 +19,7 @@ class Observer {
         return value
       },
       set: (newValue) => {
-        his.observer(newValue) // 賦值時也要重新劫持
+        this.observe(newValue) // 賦值時重新劫持
         if (newValue !== value) {
           value = newValue
         }
