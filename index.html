@@ -8,8 +8,11 @@
 </head>
 <body>
   <div id="app">
-    {{ 123 }}
-    <h1 v-html="text" title="123"></h1>
+    <div v-text="text"></div>
+    <div v-html="html.value"></div>
+    <button type="button" @click="onClick">Click me</button>
+    <button type="button" v-on:click="onClick">Click me</button>
+    <input type="text" v-model="text">
   </div>
 
   <script src="./Observe.js"></script>
@@ -18,7 +21,13 @@
     const app = new Vue({
       el: '#app',
       data: {
-        text: '我是一段字串'
+        text: '我是段字串',
+        html: {
+          value: '<h1>我是段字串</h1>'
+        },
+        onClick() {
+          alert('clicked!')
+        }
       }
     })
     console.log(app)
