@@ -5,14 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>vue-core-challenge</title>
+  <style>
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
-    <div v-text="text"></div>
-    <div v-html="html.value"></div>
-    <button type="button" @click="onClick">Click me</button>
-    <button type="button" v-on:click="onClick">Click me</button>
-    <input type="text" v-model="text">
+    <div :title="text">{{ text }}</div>
   </div>
 
   <script src="./Observe.js"></script>
