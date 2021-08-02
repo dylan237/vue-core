@@ -14,7 +14,6 @@
 </head>
 <body>
   <div id="app">
-    {{ text }}
     <div v-text="text"></div>
     <div v-html="html.value"></div>
     <button type="button" @click="onClick">Click me</button>
@@ -23,21 +22,22 @@
     <img :src="imgSrc" alt="imgSrc">
   </div>
 
-  <script src="./Observe.js"></script>
   <script src="./Vue.js"></script>
+  <script src="./Observe.js"></script>
   <script>
     const app = new Vue({
       el: '#app',
       data: {
         text: '我是段字串',
         html: {
-          value: '<h1>我是段字串</h1>'
+          value: '<h1>v-html</h1>'
         },
         imgSrc: 'https://images.unsplash.com/photo-1627729115511-f5673a4e0568?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80',
       },
       methods: {
         onClick() {
           console.log(this)
+          this.html.value = '<h3>data updated</h3>'
         }
       }
     })
