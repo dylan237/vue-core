@@ -17,9 +17,10 @@ const compileStrategies = {
     })
   },
   on(node, expr, vm, event) {
-    const cb = compileUtil.getValue(expr, vm)
+    const cb = vm.$options?.methods[expr]
     if (typeof cb !== 'function') return
-    node.addEventListener(event, cb, false)
+    const [evtName, behavior] = event.split('.')
+    node.addEventListener(evtName, cb.bind(vm), behavior === 'capture')
   },
   bind(node, expr, vm, attr) {
     const value = compileUtil.getValue(expr, vm)
@@ -99,12 +100,12 @@ class Compiler {
     const childNodes = root.childNodes
     Array.from(childNodes).forEach(child => {
       if (compileUtil.isElementNode(child)) {
-        // 元素內若還有子元素則執行遞迴編譯
-        child.childNodes && child.childNodes?.length && this.compile(child)
         this.compileElementNode(child)
       } else {
         this.compileMustacheNode(child)
       }
+      // 元素內若還有子元素則執行遞迴編譯
+      child.childNodes?.length && this.compile(child)
     })
   }
   /* 編譯 {{ }} 文本 */

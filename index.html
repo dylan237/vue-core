@@ -14,7 +14,13 @@
 </head>
 <body>
   <div id="app">
-    <div :title="text">{{ text }}</div>
+    {{ text }}
+    <div v-text="text"></div>
+    <div v-html="html.value"></div>
+    <button type="button" @click="onClick">Click me</button>
+    <button type="button" v-on:click.capture="onClick">Click me</button>
+    <input type="text" v-model="text">
+    <img :src="imgSrc" alt="imgSrc">
   </div>
 
   <script src="./Observe.js"></script>
@@ -27,8 +33,11 @@
         html: {
           value: '<h1>我是段字串</h1>'
         },
+        imgSrc: 'https://images.unsplash.com/photo-1627729115511-f5673a4e0568?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80',
+      },
+      methods: {
         onClick() {
-          alert('clicked!')
+          console.log(this)
         }
       }
     })
