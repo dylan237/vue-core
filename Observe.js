@@ -16,10 +16,18 @@ class Watcher {
   update() {
     const newValue = compileUtil.getValue(this.expr, this.vm)
     if (this.oldValue !== newValue) {
+      this.watch(newValue)
       this.oldValue = newValue
       this.vm.$options.beforeUpdate.call(this.vm)
       this.viewUpdateCallback(newValue)
       this.vm.$options.updated.call(this.vm)
+    }
+  }
+  /* watch API */
+  watch(newValue) {
+    const callback = this.vm.$options?.watch?.[this.expr]
+    if (callback && typeof callback === 'function') {
+      callback.call(this.vm, newValue, this.oldValue)
     }
   }
 }
