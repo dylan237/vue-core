@@ -147,18 +147,22 @@ class Compiler {
         if (compileUtil.strategies.includes(strategy)) {
           compileStrategies[strategy](node, value, this.vm, eventOrAttr)
         }
+        // 刪除模板 syntax
+        node.removeAttribute(name)
       }
       // 事件綁定 alias 處理, 如 @click 
       else if (compileUtil.isEventAlias(name)) {
         const [, eventName] = name.split('@')
         compileStrategies['on'](node, value, this.vm, eventName)
+        // 刪除模板 syntax
+        node.removeAttribute(name)
       }
       // v-bind alias 處理, 如 :src
       else if (compileUtil.isBindAlias(name)) {
         compileStrategies['bind'](node, value, this.vm, eventOrAttr)
+        // 刪除模板 syntax
+        node.removeAttribute(name)
       }
-      // 刪除模板 syntax
-      node.removeAttribute(name)
     }
   }
   /* 將模板語法轉儲存至 fragment, 提升效能 */
