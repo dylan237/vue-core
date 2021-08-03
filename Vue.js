@@ -173,18 +173,22 @@ class Compiler {
 class Vue {
   constructor(options) {
     if (options.el) {
-      this.$el = compileUtil.isElementNode(options.el) 
-        ? options.el
-        : document.querySelector(options.el)
+      options.beforeCreate.call(this)
       this.$data = options.data
       this.$options = options
       // 資料劫持
-      new Observer(this.$data)
-      // 模板語法編譯器
-      new Compiler(this.$el, this)
+      new Observer(this.$data, this)
       // 代理模式，將 vm.$data 內所有資料代理至 vm 物件第一層
       // 可使用簡短的 vm.somData 代替 vm.$data.someData 來訪問值。
       this.dataProxy(this.$data)
+      options.created.call(this)
+      this.$el = compileUtil.isElementNode(options.el) 
+        ? options.el
+        : document.querySelector(options.el)
+      options.beforeMount.call(this)
+      // 模板語法編譯器
+      new Compiler(this.$el, this)
+      options.mounted.call(this)
     }
   }
   dataProxy(data) {

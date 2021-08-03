@@ -17,7 +17,9 @@ class Watcher {
     const newValue = compileUtil.getValue(this.expr, this.vm)
     if (this.oldValue !== newValue) {
       this.oldValue = newValue
+      this.vm.$options.beforeUpdate.call(this.vm)
       this.viewUpdateCallback(newValue)
+      this.vm.$options.updated.call(this.vm)
     }
   }
 }
@@ -61,8 +63,8 @@ class Observer {
         this.observe(newValue) // 賦值時重新劫持
         if (newValue !== value) {
           value = newValue
+          dep.notify() // 7. 未來當資料產生改變時透過 Dependency 的 notify 方法通知被儲存在 dep 中的 watcher,  watcher 則呼叫自己的 update 函數，update 函數則觸發第一步綁定的更新畫面callback
         }
-        dep.notify() // 7. 未來當資料產生改變時透過 Dependency 的 notify 方法通知被儲存在 dep 中的 watcher,  watcher 則呼叫自己的 update 函數，update 函數則觸發第一步綁定的更新畫面callback
       }
     })
   }

@@ -39,9 +39,36 @@
           console.log(this)
           this.html.value = '<h3>data updated</h3>'
         }
-      }
+      },
+      beforeCreate() {
+        console.log('------- Hook: beforeCreate -------');
+        console.log(` this.text: ${this.text}`);
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
+      created() {
+        console.log('------- Hook: created -------');
+        console.log(` this.text: ${this.text}`);
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
+      beforeMount() {
+        console.log('------- Hook: beforeMount -------');
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
+      mounted() {
+        console.log('------- Hook: mounted -------');
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
+      beforeUpdate() {
+        console.log('------- Hook: beforeUpdate -------');
+        console.log(` this.html.value: ${this.html.value}`);
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
+      updated() {
+        console.log('------- Hook: updated -------');
+        console.log(` this.html.value: ${this.html.value}`);
+        console.log(` this.$el: ${this.$el?.outerHTML}`);
+      },
     })
-    console.log(app)
   </script>
 </body>
 </html>
